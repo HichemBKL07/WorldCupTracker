@@ -14,7 +14,7 @@ This project was a collaborative effort by three team members:
 - **Mathias Braune**  
   - Handled all the **PHP code** that communicates with the database (matches, players, etc.) and created the **HTML structure** of the website.
 
-- **[Your Name]**  
+- **Hichem Benkahla (me) **  
   - Worked on **web scraping with BeautifulSoup librairy** (using FBREF.com), the **database creation**, and the **global appearance** of the website (CSS).
 
 The **database structure** was designed collaboratively by all team members.
