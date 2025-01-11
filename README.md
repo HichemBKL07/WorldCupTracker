@@ -3,7 +3,7 @@
 Navigate through a comprehensive FIFA World Cup database covering tournaments from 1930 to 2022. This project was developed as part of the **'Banques de Données' course** at UMons.
 
 ## Disclaimer
-The website might not be visually perfect or professionally designed—this is our very first website! So please don't be too harsh in your judgments. 😊
+The website might not be visually perfect or professionally designed—this is our very first website
 
 ## Team Members and Contributions
 This project was a collaborative effort by three team members:
