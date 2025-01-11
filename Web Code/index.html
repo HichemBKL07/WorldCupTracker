@@ -1,0 +1,559 @@
+<?php
+	session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WORLD CUP TRACKER</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+     	<link rel="stylesheet" href="styles.css">
+        <script>
+        window.onload = function() {
+            fetch('session_status.php')
+                .then(response => response.text())
+                .then(status => {
+                    if (status === 'connected') {
+                        console.log("Utilisateur connecté");
+                        alert("Utilisateur connecté");
+                    } else {
+                        console.log("Utilisateur non connecté");
+                        alert("Utilisateur non connecté");
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+        };
+    </script>
+    </head>
+<body>
+
+<header class="navbar-header">
+    <div class="navbar-container">
+        <div class="site-title">
+            <h1>WORLD CUP TRACKER</h1>
+        </div>
+        
+        <nav class="navbar">
+            <div class="navbar-text">
+				Toute vos données sur la Coupe du Monde
+            </div>
+        </nav>
+        
+        <div class="logo">
+            <img src="pngegg.png" alt="Logo Coupe du Monde" class="logo-img">
+        </div>
+    </div>
+</header>
+
+
+<div>
+        <div id="session-buttons"> 
+        
+        </div>
+    <script>
+        fetch('session_status.php')
+            .then(response => response.text())
+            .then(status => {
+                const sessionButtons = document.getElementById('session-buttons');
+                if (status === 'connected') {
+                    sessionButtons.innerHTML = '<button onclick="window.location.href=\'deconnexion.php\'">Se deconnecter</button>>';
+                        
+                } else {
+                    sessionButtons.innerHTML = '<button onclick="window.location.href=\'connexion_inscription.php\'">Se connecter / S\'inscrire</button>';
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+    </script>
+</div>
+
+<br><br>
+<h2>
+Voir une coupe du monde <br>
+</h2>
+
+<form action='selection_edition.php' method='post'>
+<select id="annee" name="annee" required>
+    <option value="">Sélectionnez une année</option>
+    <option value="1930">1930</option>
+    <option value="1934">1934</option>
+    <option value="1938">1938</option>
+    <option value="1950">1950</option>
+    <option value="1954">1954</option>
+    <option value="1958">1958</option>
+    <option value="1962">1962</option>
+    <option value="1966">1966</option>
+    <option value="1970">1970</option>
+    <option value="1974">1974</option>
+    <option value="1978">1978</option>
+    <option value="1982">1982</option>
+    <option value="1986">1986</option>
+    <option value="1990">1990</option>
+    <option value="1994">1994</option>
+    <option value="1998">1998</option>
+    <option value="2002">2002</option>
+    <option value="2006">2006</option>
+    <option value="2010">2010</option>
+    <option value="2014">2014</option>
+    <option value="2018">2018</option>
+    <option value="2022">2022</option>
+</select>
+
+<input type='submit' value='accéder'><br><br>
+</form>
+<h2>
+Stats Tracker<br>
+
+<h4>
+    <form action = 'stat_tracker.php' method = 'post'>
+        performance: &nbsp <select name="performance" required>
+            <option value="">Sélectionnez une performance</option>
+            <option value="meilleur buteur">top buteurs</option>
+            <option value="meilleur passeur">top passeurs</option>
+            <option value="le plus de cartons">top cartons</option>
+            <option value="le plus de cartons jaunes">top cartons jaunes</option>
+            <option value="le plus de cartons rouges">top cartons rouges</option>
+            
+            </select>
+            <h3>
+                Filtres
+            </h3>
+            
+            <h4 style="display: flex; align-items: center;">
+                Année de  &nbsp
+                <select name="annee1" id="annee-debut" required>
+                    <option value="">Sélectionnez une année</option>
+                    <option value="1930">1930</option>
+                    <option value="1934">1934</option>
+                    <option value="1938">1938</option>
+                    <option value="1950">1950</option>
+                    <option value="1954">1954</option>
+                    <option value="1958">1958</option>
+                    <option value="1962">1962</option>
+                    <option value="1966">1966</option>
+                    <option value="1970">1970</option>
+                    <option value="1974">1974</option>
+                    <option value="1978">1978</option>
+                    <option value="1982">1982</option>
+                    <option value="1986">1986</option>
+                    <option value="1990">1990</option>
+                    <option value="1994">1994</option>
+                    <option value="1998">1998</option>
+                    <option value="2002">2002</option>
+                    <option value="2006">2006</option>
+                    <option value="2010">2010</option>
+                    <option value="2014">2014</option>
+                    <option value="2018">2018</option>
+                    <option value="2022">2022</option>
+                </select>
+                 &nbsp à &nbsp
+                <select name = "annee2" id="annee-fin" required >
+                    <option value="">Sélectionnez une année</option>
+                    
+                </select>
+            </h4>
+            
+            <script>
+                <!--Le java script permet que lorsque qu'on sélectionne un filtre sur les année de ANNEE à ANNEE', ANNEE' ne contienne que les année apres ANNEE -->   
+                const annees = [
+                    1930, 1934, 1938, 1950, 1954, 1958, 1962, 1966, 1970, 1974, 
+                    1978, 1982, 1986, 1990, 1994, 1998, 2002, 2006, 2010, 2014, 
+                    2018, 2022
+                ];
+            
+                function updateAnneeFinOptions() {
+                    const anneeDebutValue = parseInt(document.getElementById("annee-debut").value);
+                    const anneeFinSelect = document.getElementById("annee-fin");
+            
+                   
+                    anneeFinSelect.innerHTML = '<option value="">Sélectionnez une année</option>';
+            
+                    
+                    if (anneeDebutValue) {
+                        annees.forEach(function(annee) {
+                            if (annee >= anneeDebutValue) {
+                                const option = document.createElement("option");
+                                option.value = annee;
+                                option.textContent = annee;
+                                anneeFinSelect.appendChild(option);
+                            }
+                        });
+                    }
+                }
+            
+                
+                document.getElementById("annee-debut").addEventListener("change", updateAnneeFinOptions);
+            </script>
+            
+            
+            
+            
+            <h4>
+                confédération : &nbsp <select name= "confederation" id="confederation" >
+                    <option value="">Sélectionnez une confédération</option>
+                    <option value="AFC">AFC</option>
+                    <option value="UEFA">UEFA</option>
+                    <option value="CAF">CAF</option>
+                    <option value="CONMEBOL">CONMEBOL</option>
+                    <option value="OFC">OFC</option>
+                    <option value="CONCACAF">CONCACAF</option>
+                    </select>
+            </h4>
+            
+            <h4 style="display: flex; align-items: center;">
+                Pays &nbsp
+                <select name="pays" id="pays" >
+                    <option value="">Sélectionnez un pays</option>
+                </select>
+            </h4>
+            
+            
+            <script>
+                <!-- le java script permet que lorsqu'on sélectionne un filtre par confédération, le filtre pays ne ppropose que les pays de la confédération choisie -->    
+                const paysParConfederation = {
+    "AFC": [
+        "Saudi Arabia", "Australia", "China PR", "North Korea", "South Korea", 
+        "Indonesia", "Iran", "Iraq", "Japan", "Kuwait", "Qatar"
+    ],
+    "UEFA": [
+        "Germany", "Austria", "Belgium", "Bosnia & Herz'na", "Bulgaria", 
+        "Croatia", "Denmark", "Scotland", "Spain", "France", "Greece", 
+        "Hungary", "Iceland", "Rep. of Ireland", "Italy", "Norway", 
+        "Netherlands", "Poland", "Portugal", "Romania", "Russia", 
+        "Serbia", "Slovakia", "Slovenia", "Sweden", "Switzerland", 
+        "Czechoslovakia", "Türkiye", "Ukraine", "North Macedonia", "Finland"
+    ],
+    "CAF": [
+        "Algeria", "Angola", "Cameroon", "Egypt", "Ghana", 
+        "Morocco", "Nigeria", "South Africa", "Senegal", "Tunisia"
+    ],
+    "CONMEBOL": [
+        "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
+        "Ecuador", "Paraguay", "Peru", "Uruguay", "Venezuela"
+    ],
+    "OFC": [
+        "New Zealand"
+    ],
+    "CONCACAF": [
+        "Canada", "Costa Rica", "Cuba", "Honduras", "Jamaica", 
+        "Mexico", "Panama", "El Salvador", "Trinidad and Tobago", 
+        "United States"
+    ]
+}
+
+            
+            
+            
+            
+                const selectConfederation = document.getElementById("confederation");
+                const selectPays = document.getElementById("pays");
+            
+                function updatePaysOptions() {
+                   
+                    const confederation = selectConfederation.value;
+                    selectPays.innerHTML = '<option value="">Sélectionnez un pays</option>';
+            
+                    if (confederation ) {
+                        paysParConfederation[confederation].forEach(function(pays) {
+                            const option = document.createElement("option");
+                            option.value = pays;
+                            option.textContent = pays;
+                            selectPays.appendChild(option);
+                        });
+                    }
+                }
+            
+                // event listener detect les evenement sur selectconfederation
+                selectConfederation.addEventListener("change", updatePaysOptions);
+        </script>
+            
+            <input type="submit" value="Afficher les résultats"><br><br>
+
+            
+            </h2>
+                </form>
+</h4>
+
+
+<br><br>
+        
+<h2>
+    Performance de nation 
+</h2>
+ <form action='performance_nation.php' method='post'>
+<h4>
+   
+    performance: <select name="perf" id="perf" required>
+        <option value="">Sélectionnez une performance</option>
+        <option value="nombre de victoire">nombre de victoire</option>
+        <option value="nombre de buts">nombre de buts</option>
+
+        </select>
+</h4>
+
+<h3>
+    Filtres
+</h3>
+
+<h4 style="display: flex; align-items: center;">
+    Année de &nbsp
+    <select name="annee1" id="annee-debut2" required>
+        <option value="">Sélectionnez une année</option>
+        <option value="1930">1930</option>
+        <option value="1934">1934</option>
+        <option value="1938">1938</option>
+        <option value="1950">1950</option>
+        <option value="1954">1954</option>
+        <option value="1958">1958</option>
+        <option value="1962">1962</option>
+        <option value="1966">1966</option>
+        <option value="1970">1970</option>
+        <option value="1974">1974</option>
+        <option value="1978">1978</option>
+        <option value="1982">1982</option>
+        <option value="1986">1986</option>
+        <option value="1990">1990</option>
+        <option value="1994">1994</option>
+        <option value="1998">1998</option>
+        <option value="2002">2002</option>
+        <option value="2006">2006</option>
+        <option value="2010">2010</option>
+        <option value="2014">2014</option>
+        <option value="2018">2018</option>
+        <option value="2022">2022</option>
+    </select>
+    &nbsp  à &nbsp
+    <select name="annee2" id="annee-fin2" required>
+        <option value="">Sélectionnez une année</option>
+        
+    </select>
+</h4>
+
+<script>
+    const annees2 = [
+        1930, 1934, 1938, 1950, 1954, 1958, 1962, 1966, 1970, 1974, 
+        1978, 1982, 1986, 1990, 1994, 1998, 2002, 2006, 2010, 2014, 
+        2018, 2022
+    ];
+
+    function updateAnneeFinOptions2() { 
+        const anneeDebutValue = parseInt(document.getElementById("annee-debut2").value);
+        const anneeFinSelect = document.getElementById("annee-fin2");
+        
+        anneeFinSelect.innerHTML = '<option value="">Sélectionnez une année</option>';
+        
+        if (anneeDebutValue) {
+            annees2.forEach(function(annee) {
+                if (annee >= anneeDebutValue) {
+                    const option = document.createElement("option");
+                    option.value = annee;
+                    option.textContent = annee;
+                    anneeFinSelect.appendChild(option);
+                }
+            });
+        }
+    }
+    
+    document.getElementById("annee-debut2").addEventListener("change", updateAnneeFinOptions2);
+</script>
+
+
+
+<h4>
+    confédération :  &nbsp <select name= "confederation" id="confederation" >
+        <option value="">Sélectionnez une confédération</option>
+        <option value="AFC">AFC</option>
+        <option value="UEFA">UEFA</option>
+        <option value="CAF">CAF</option>
+        <option value="CONMEBOL">CONMEBOL</option>
+        <option value="OFC">OFC</option>
+        <option value="CONCACAF">CONCACAF</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Afficher les résultats"><br><br>
+</h4>
+</form>
+
+
+<h2>
+    Les match les mieux notés
+</h2>
+    <form action='top_match.php' method='post'>
+    <h4 class="inline" style="display: flex; align-items: center;">
+    <input type='submit' value='accéder'><br>
+      
+    </form>
+
+
+<h2>
+    rechercher un joueur
+</h2>
+
+
+    <form action='recherche_joueur.php' method='post'>
+    <h4 class="inline" style="display: flex; align-items: center;">
+    <input type='text' name='prenom_joueur' placeholder='Entrez le prenom du joueur' >
+    <input type='text' name='nom_joueur' placeholder='Entrez le nom du joueur' required>
+   
+    <input type='submit' value='accéder'><br>
+      
+    </form>
+    
+
+</h4>
+
+<br><br>
+<h2>
+    <h2>
+        Rechercher un match
+    </h2>
+    <form action='head_to_head.php' method='post'>
+    <h4 class="inline" style="display: flex; align-items: center;">
+    
+        Sélectionnez le premier pays: &nbsp
+        <select id="pays1" name="pays1" >
+                <option value="">Sélectionnez un pays</option>
+                <option value="Algeria">Algeria</option>
+                <option value="Angola">Angola</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Australia">Australia</option>
+                <option value="Austria">Austria</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="Bosnia & Herz'na">Bosnia & Herz'na</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Cameroon">Cameroon</option>
+                <option value="Canada">Canada</option>
+                <option value="Chile">Chile</option>
+                <option value="China PR">China PR</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Costa Rica">Costa Rica</option>
+                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                <option value="Croatia">Croatia</option>
+                <option value="Cuba">Cuba</option>
+                <option value="Czechoslovakia">Czechoslovakia</option>
+                <option value="Czechia">Czechia</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Dutch East Indies">Dutch East Indies</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Egypt">Egypt</option>
+                <option value="El Salvador">El Salvador</option>
+                <option value="England">England</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Germany DR">Germany DR</option>
+                <option value="Ghana">Ghana</option>
+                <option value="Greece">Greece</option>
+                <option value="Haiti">Haiti</option>
+                <option value="Honduras">Honduras</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Iceland">Iceland</option>
+                <option value="India">India</option>
+                <option value="IR Iran">IR Iran</option>
+                <option value="Iraq">Iraq</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="Korea DPR">Korea DPR</option>
+                <option value="Korea Republic">Korea Republic</option>
+                <option value="Kuwait">Kuwait</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Morocco">Morocco</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="Northern Ireland">Northern Ireland</option>
+                <option value="Norway">Norway</option>
+                <option value="Panama">Panama</option>
+                <option value="Paraguay">Paraguay</option>
+                <option value="Peru">Peru</option>
+                <option value="Poland">Poland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Rep. of Ireland">Rep. of Ireland</option>
+                <option value="Romania">Romania</option>
+                <option value="Russia">Russia</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Scotland">Scotland</option>
+                <option value="Senegal">Senegal</option>
+                <option value="Serbia">Serbia</option>
+                <option value="Serbia & Montenegro">Serbia & Montenegro</option>
+                <option value="Slovakia">Slovakia</option>
+                <option value="Slovenia">Slovenia</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Soviet Union">Soviet Union</option>
+                <option value="Spain">Spain</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Trin & Tobago">Trin & Tobago</option>
+                <option value="Tunisia">Tunisia</option>
+                <option value="Türkiye">Türkiye</option>
+                <option value="UAE">UAE</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United States">United States</option>
+                <option value="Uruguay">Uruguay</option>
+                <option value="Wales">Wales</option>
+                <option value="West Germany">West Germany</option>
+                <option value="Yugoslavia">Yugoslavia</option>
+                <option value="Zaire">Zaire</option>
+            </select>
+
+
+        Sélectionnez le deuxième pays: &nbsp
+        <select id="pays2" name="pays2" >
+            <option value="">Sélectionnez un pays</option>
+        </select>
+
+    <input type='submit' value='accéder'><br>
+    
+    </form>
+    </h4> 
+</h2>
+
+<script>
+   <!-- le java script permet que lorsqu'un pays est choisis, la proposition du second pays ne contient pas le premier pays choisis -->
+
+   const countries = [
+    "Algeria", "Angola", "Argentina", "Australia", "Austria", "Belgium", "Bolivia", 
+    "Bosnia & Herz'na", "Brazil", "Bulgaria", "Cameroon", "Canada", "Chile", "China PR", 
+    "Colombia", "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Czechoslovakia", 
+    "Czechia", "Denmark", "Dutch East Indies", "Ecuador", "Egypt", "El Salvador", "England", 
+    "France", "Germany", "Germany DR", "Ghana", "Greece", "Haiti", "Honduras", "Hungary", 
+    "Iceland", "India", "IR Iran", "Iraq", "Israel", "Italy", "Japan", "Korea DPR", 
+    "Korea Republic", "Kuwait", "Mexico", "Morocco", "Netherlands", "New Zealand", "Nigeria", 
+    "Northern Ireland", "Norway", "Panama", "Paraguay", "Peru", "Poland", "Portugal", "Qatar", 
+    "Rep. of Ireland", "Romania", "Russia", "Saudi Arabia", "Scotland", "Senegal", "Serbia", 
+    "Serbia & Montenegro", "Slovakia", "Slovenia", "South Africa", "Soviet Union", "Spain", 
+    "Sweden", "Switzerland", "Trin & Tobago", "Tunisia", "Türkiye", "UAE", "Ukraine", 
+    "United States", "Uruguay", "Wales", "West Germany", "Yugoslavia", "Zaire"
+];
+
+    function updatepays2Options() {
+        const pays_1 = document.getElementById("pays1").value;
+        const pays_2 = document.getElementById("pays2");
+
+       
+        pays_2.innerHTML = '<option value="">Sélectionnez un pays</option>';
+
+        
+        if (pays_1) {
+            countries.forEach(function(country) {
+                if (country != pays_1) {
+                    const option = document.createElement("option");
+                    option.value = country;
+                    option.textContent = country;
+                    pays_2.appendChild(option);
+                }
+            });
+        }
+    }
+
+    
+    document.getElementById("pays1").addEventListener("change", updatepays2Options);
+</script>
+
+</body>
+</html>
