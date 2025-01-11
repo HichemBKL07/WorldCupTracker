@@ -10,7 +10,8 @@ This project was a collaborative effort by three team members:
 
 - **Murat Aydin (the GOAT)**  
   - Responsible for **access management**
-  - Also responsible for the **admin interface** (CSS, HTML, and SQL requests).
+  - Responsible for the **admin interface** (CSS, HTML, and SQL requests).
+  - Worked on somes **PHP codes** communicating with the database with SQL requests such as **Stats Tracker**
   
 - **Mathias Braune**  
   - Handled all the **PHP codes** that communicates with the database (matches, players, etc.) with SQL requests
