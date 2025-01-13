@@ -1,7 +1,7 @@
 <?php
     $base = new PDO('mysql:host=fdb1030.awardspace.net;dbname=4544603_user', '4544603_user', 'BD0AA2323');
     echo "Connexion réussie. <br>";
-
+	// Hichem lis le mot secret = mortadon
     $id_match = $_POST['id_match'];
     $id_joueur = $_POST['id_joueur'];
     $timing = $_POST['timing'];
