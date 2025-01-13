@@ -15,9 +15,8 @@
         ':pays_organisateur' => $pays_organisateur,
         ':id_vainqueur' => $id_vainqueur
     ]);
-    $ligne = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $nb_ligne = count($ligne);
-    if (nb_ligne >0)
+    $nb_ligne = $stmt->fetchColumn();
+    if ($nb_ligne >0)
     {
         echo "Une competition similaire existe déjà dans la base de données. Votre ajout n'a pas eu lieu.";
     }
@@ -25,7 +24,7 @@
     {
         $sql = "INSERT INTO competition(id_competition, annee, pays_organisateur, id_vainqueur) 
         VALUES (NULL, '$annee', '$pays_organisateur', '$id_vainqueur')";
-        $resultat=$base->execute($sql);
+        $resultat=$base->exec($sql);
         echo "Competition ajoutée avec succès !";
     }
     
