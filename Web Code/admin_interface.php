@@ -179,8 +179,6 @@
                     <input type="text" name="nom" required>
                     <label>Prénom :</label>
                     <input type="text" name="prenom">
-                    <label>Date de Naissance :</label>
-                    <input type="date" name="date_naissance">
                     <label>Poste :</label>
                     <input type="text" name="poste">
                     <label>ID de la Nation :</label>
@@ -237,16 +235,28 @@
             <div class="table-container">
                 <form action="ajoutermatch.php" method="POST">
                     <p class="action-title">Ajouter</p>
-                    <label>Équipe 1 :</label>
-                    <input type="int" name="id_equipe1" required>
-                    <label>Équipe 2 :</label>
-                    <input type="int" name="id_equipe2" required>
-                    <label>Stade :</label>
-                    <input type="int" name="id_stade" required>
+                    <label>Tour :</label>
+                    <input type="text" name="tour" required>
                     <label>Date :</label>
                     <input type="date" name="date_match" required>
-                    <label>Phase :</label>
-                    <input type="text" name="phase" required>
+                    <label>Heure :</label>
+                    <input type="time" name="heure" required>
+                    <label>Équipe 1 :</label>
+                    <input type="int" name="id_nation_local" required>
+                    <label>Équipe 2 :</label>
+                    <input type="int" name="id_nation_visiteur" required>
+                    <label>Score Équipe 1 :</label>
+                    <input type="int" name="score_local" required>  
+                    <label>Score Équipe 2 :</label>
+                    <input type="int" name="score_visiteur" required>    
+                    <label>ID Stade :</label>
+                    <input type="int" name="id_stade" >
+                    <label>Affluence :</label>
+                    <input type="int" name="affluence" >
+                    <label>URL match :</label>
+                    <input type="text" name="url_match" >
+                    <label>ID compétition :</label>
+                    <input type="int" name="id_competition" >    
                     <button type="submit">Ajouter</button>
                 </form>
 
@@ -312,7 +322,7 @@
                     <label>ID du joueur :</label>
                     <input type="int" name="id_joueur" required>
                     <label>Minute :</label>
-                    <input type="int" name="timing">
+                    <input type="int" name="minute">
                     <label>Type :</label>
                     <input type="text" name="type_faute">
                     <button type="submit">Ajouter</button>
@@ -369,7 +379,7 @@
         <section>
             <h2>Gestion de la table temps de jeu</h2>
             <div class="table-container">
-                <form action="ajoutertdc.php" method="POST">
+                <form action="ajoutertdj.php" method="POST">
                     <p class ="action-title">Ajouter</p>
                     <label>ID joueur :</label>
                     <input type="int" name="id_joueur" required>
@@ -391,7 +401,7 @@
                     <button type="submit">Rechercher</button>
                 </form>
                     
-                <form action="supprimertdc.php" method="POST">
+                <form action="supprimertdj.php" method="POST">
                     <p class="action-title">Supprimer</p>
                     <label>ID du temps de jeu :</label>
                     <input type="text" name="idsupp" required>
@@ -407,10 +417,6 @@
                     <p class="action-title">Ajouter</p>
                     <label>Nom :</label>
                     <input type="text" name="nom" required>
-                    <label>Ville :</label>
-                    <input type="text" name="ville" required>
-                    <label>Capacité :</label>
-                    <input type="number" name="capacite" required>
                     <button type="submit">Ajouter</button>
                 </form>
 

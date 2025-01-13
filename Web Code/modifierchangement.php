@@ -18,8 +18,8 @@
                 echo "ID Joueur entrant : <input type = 'number' name = 'id_joueur1' value = '" . htmlspecialchars($changement['id_joueur1'])."'required><br>";
                 echo "ID Joueur sortant : <input type = 'number' name = 'id_joueur2' value = '" . htmlspecialchars($changement['id_joueur2'])."'required><br>";
                 echo "Timing : <input type = 'number' name = 'timing' value = '" . htmlspecialchars($changement['timing'])."' required><br>";
-
                 echo "<input type = 'hidden' name = 'id_changement' value = '" . $changement['id_changement']."'>";
+                echo "<input type='hidden' name='update' value='1'>";
                 echo "<input type = 'submit' value = 'Mettre à jour'>";
                 echo "</form>";
             }
@@ -32,19 +32,22 @@
         if (isset($_POST['id_changement']) && isset($_POST['update']))
         {
             $id_changement = $_POST['id_changement'];
+            $id_match = $_POST['id_match'];
             $id_joueur1 = $_POST['id_joueur1'];
             $id_joueur2 = $_POST['id_joueur2'];
             $timing = $_POST['timing'];
 
-            $sql = 'UPDATE changement SET id_joueur1 = :id_joueur1, id_joueur2 = :id_joueur2, timing = :timing WHERE id_changement = :id';
+            $sql = 'UPDATE changement SET id_match = :id_match, id_joueur1 = :id_joueur1, id_joueur2 = :id_joueur2, timing = :timing WHERE id_changement = :id';
             $stmt = $base->prepare($sql);
             $stmt->execute([
                 'id' => $id_changement,
+                'id_match' => $id_match,
                 'id_joueur1' => $id_joueur1,
                 'id_joueur2' => $id_joueur2,
                 'timing' => $timing,
             ]);
-
+			
+            echo "<h3>Les informations du changement ont été mises à jour avec succès !</h3>";
         }
     }
 

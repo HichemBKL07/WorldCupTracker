@@ -13,10 +13,19 @@
     $affluence = $_POST['affluence'];
     $url_match = $_POST['url_match'];
     $id_competition = $_POST['id_competition'];
-    $checksql = "SELECT COUNT(*) FROM `match` WHERE tour = :tour AND date_match = :date_match 
-    AND heure = :heure AND score_local = :score_local AND score_visiteur = :score_visiteur 
-    AND id_nation_local = :id_nation_local AND id_nation_visiteur AND id_stade = :id_stade 
-    AND affluence = :affluence AND url_match = :url_match AND id_competition =:id_competition";
+    $checksql = "SELECT COUNT(*) 
+	FROM `match` 
+	WHERE tour = :tour 
+	AND date_match = :date_match 
+    AND heure = :heure 
+	AND score_local = :score_local 
+	AND score_visiteur = :score_visiteur 
+    AND id_nation_local = :id_nation_local 
+	AND id_nation_visiteur = :id_nation_visiteur 
+	AND id_stade = :id_stade 
+    AND affluence = :affluence 
+	AND url_match = :url_match 
+	AND id_competition =:id_competition";
     $stmt = $base->prepare($checksql);
     $stmt->execute([
         ':tour' => $tour,
@@ -31,11 +40,10 @@
         ':url_match' => $url_match,
         ':id_competition' => $id_competition
     ]);
-    $ligne = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $nb_ligne = count($ligne);
-    if (nb_ligne >0)
+    $nb_ligne = $stmt->fetchColumn();
+    if ($nb_ligne >0)
     {
-        echo "Un joueur similaire existe déjà dans la base de données. Votre ajout n'a pas eu lieu.";
+        echo "Un match similaire existe déjà dans la base de données. Votre ajout n'a pas eu lieu.";
     }
     else 
     {

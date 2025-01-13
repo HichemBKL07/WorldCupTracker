@@ -32,9 +32,9 @@ try {
         $id_match = $_POST['id_match'] ?? '';
         $id_joueur = $_POST['id_joueur'] ?? '';
         $timing = $_POST['timing'] ?? '';
-        $id_passeur = $_POST['id_passeur'] ?? '';
-        $penalty = isset($_POST['penalty']) ? 1 : 0;
-        $csc = isset($_POST['csc']) ? 1 : 0;
+        $id_passeur = $_POST['id_passeur'] ?: NULL;
+        $penalty = isset($_POST['penalty']) ? 1 : NULL;
+        $csc = isset($_POST['csc']) ? 1 : NULL;
 
         $sql = 'UPDATE but SET id_match = :id_match, id_joueur = :id_joueur, timing = :timing, id_passeur = :id_passeur, penalty = :penalty, csc = :csc WHERE id_but = :id';
         $stmt = $base->prepare($sql);

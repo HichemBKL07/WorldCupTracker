@@ -12,6 +12,7 @@ try {
         if ($match = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<h3>Modifier les informations du match</h3>";
             echo "<form action='' method='post'>";
+            echo "Tour : <input type='text' name='tour' value='" . htmlspecialchars($match['tour']) . "' required><br>";
             echo "Date : <input type='date' name='date_match' value='" . htmlspecialchars($match['date_match']) . "' required><br>";
             echo "Heure : <input type='time' name='heure' value='" . htmlspecialchars($match['heure']) . "' required><br>";
             echo "Score local : <input type='number' name='score_local' value='" . htmlspecialchars($match['score_local']) . "' required><br>";
@@ -20,7 +21,7 @@ try {
             echo "ID Nation visiteur : <input type='number' name='id_nation_visiteur' value='" . htmlspecialchars($match['id_nation_visiteur']) . "' required><br>";
             echo "ID Stade : <input type='number' name='id_stade' value='" . htmlspecialchars($match['id_stade']) . "' required><br>";
             echo "Affluence : <input type='number' name='affluence' value='" . htmlspecialchars($match['affluence']) . "'required><br>";
-            echo "URL Match : <input type='url' name='url_match' value='" . htmlspecialchars($match['url_match']) . "'required><br>";
+            echo "URL Match : <input type='text' name='url_match' value='" . htmlspecialchars($match['url_match']) . "'required><br>";
             echo "ID Compétition : <input type='number' name='id_competition' value='" . htmlspecialchars($match['id_competition']) . "' required><br>";
             echo "<input type='hidden' name='id_match' value='" . $match['id_match'] . "'>";
             echo "<input type='hidden' name='update' value='1'>";

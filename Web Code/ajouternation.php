@@ -10,8 +10,7 @@
         ':nom' => $nom,
         ':confederation' => $confederation
     ]);
-    $ligne = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $nb_ligne = count($ligne);
+   	$nb_ligne = $stmt->fetchColumn();
     if ($nb_ligne>0)
     {
         echo "Une nation similaire existe déjà dans la base de données. Votre ajout n'a pas eu lieu.";
@@ -21,7 +20,7 @@
     {
         $sql = "INSERT INTO nation(id_nation, nom, confederation) 
         VALUES (NULL, '$nom', '$confederation')";
-        $resultat=$base->execute($sql);
+        $resultat=$base->exec($sql);
         echo "Nation ajoutée avec succès !";
     }
     

@@ -32,7 +32,7 @@ try {
         $minute = $_POST['minute'] ?? '';
         $type_faute = $_POST['type_faute'] ?? '';
 
-        $sql = 'UPDATE faute SET id_match = :id_match, id_joueur = :id_joueur, `minute` = `:minute`, type_faute = :type_faute WHERE id_faute = :id';
+        $sql = 'UPDATE faute SET id_match = :id_match, id_joueur = :id_joueur, `minute` = :minute, type_faute = :type_faute WHERE id_faute = :id';
         $stmt = $base->prepare($sql);
         $stmt->execute([
             'id' => $id_faute,
