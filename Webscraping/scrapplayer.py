@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Clé API ScraperAPI
-SCRAPER_API_KEY = '8f94dc6e821798a2bbde762199cbdf28'
+SCRAPER_API_KEY = '7173573f96bd5c4880e45c23102b2ac4'
 
 # Création de la table 'Joueur' si elle n'existe pas déjà
 cursor.execute('''
@@ -79,8 +79,8 @@ def extract_players_from_team_page(team_url, nation_name):
             
             # Vérifier que `th` et `cols` ne sont pas vides
             if th and cols:
-                full_name = cols[0].get_text(strip=True)
-                poste = cols[1].get_text(strip=True)
+                full_name = th.get_text(strip=True)
+                poste = cols[0].get_text(strip=True)
                 
                 # Vérifier si `full_name` n'est pas vide
                 if full_name:
@@ -94,10 +94,8 @@ def extract_players_from_team_page(team_url, nation_name):
                         nom = " ".join(name_parts[1:])
 
                     if nom:  # Assurer que 'nom' n'est pas vide
-                        cursor.execute('''
-                            SELECT COUNT(*) FROM Joueur
-                            WHERE nom = %s AND (prenom = %s OR %s IS NULL) AND id_nation = %s
-                        ''', (nom, prenom, prenom, id_nation))
+                        cursor.execute('''SELECT COUNT(*) FROM Joueur WHERE nom = %s AND (prenom = %s OR %s IS NULL) AND id_nation = %s ''', (nom, prenom, prenom, id_nation))
+
 
                         if cursor.fetchone()[0] == 0:
                             cursor.execute('''
@@ -107,13 +105,12 @@ def extract_players_from_team_page(team_url, nation_name):
                             print(f"Ajouté joueur : {nom} {prenom if prenom else ''}, Poste: {poste}, Nation ID: {id_nation}")
                         else:
                             print(f"Doublon détecté pour le joueur : {nom} {prenom if prenom else ''}, Nation: {nation_name}")
-                    else:
-                        print(f"Informations incomplètes pour le joueur : Nom complet récupéré = {full_name}, Position = {poste}")
+                    
                 else:
                     print("Nom du joueur non trouvé pour cette ligne.")
 
 # Liste des années des éditions de la Coupe du Monde
-world_cup_years = [2022]
+world_cup_years = [2018,2014,2010,2006,2002,1998,1994,1990,1986,1982,1978,1974,1970,1966,1962,1958,1954,1950,1938,1934,1930]
 
 # Boucle sur chaque année pour récupérer les joueurs
 for year in world_cup_years:
@@ -134,21 +131,25 @@ for year in world_cup_years:
     for table in tables:
         header_row = table.find('th', attrs={'aria-label': 'Équipe'})
         if header_row:
+            roww= table.find_all('tr')
+            print(f"le nombre de lignes dans cette table: {len(roww)}")
             for row in table.find_all('tr')[1:]:
-                cols = row.find_all('td')
-                if len(cols) > 1:
-                    team_cell = cols[0]
-                    a_tag = team_cell.find('a')
+               
+                if len(roww)>6:
+                    cols = row.find_all('td')
+                    if len(cols) > 1:
+                        team_cell = cols[0]
+                        a_tag = team_cell.find('a')
 
-                    if a_tag:
-                        team_name = a_tag.get_text(strip=True)
-                        team_url = 'https://fbref.com' + a_tag['href']
+                        if a_tag:
+                            team_name = a_tag.get_text(strip=True)
+                            team_url = 'https://fbref.com' + a_tag['href']
 
-                        print(f"Traitement de l'équipe : {team_name}")
-                        extract_players_from_team_page(team_url, team_name)
+                            print(f"Traitement de l'équipe : {team_name}")
+                            extract_players_from_team_page(team_url, team_name)
 
                         # Temporisation pour respecter le quota de ScraperAPI
-                        time.sleep(1)  # Délai pour limiter le nombre de requêtes par minute
+                            time.sleep(0.01)  # Délai pour limiter le nombre de requêtes par minute
 
     # Commit des changements dans la base de données pour chaque année
     conn.commit()
