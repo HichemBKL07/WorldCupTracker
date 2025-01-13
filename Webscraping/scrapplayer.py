@@ -112,7 +112,7 @@ def extract_players_from_team_page(team_url, nation_name):
                 else:
                     print("Nom du joueur non trouvé pour cette ligne.")
 
-# Liste des années des éditions de la Coupe du Monde
+# Liste des années des éditions de la Coupe du Monde ici y a que 2022 car le fortmat est un peu different que les annes precedentes mais de 1950 a 2014 je peux tout faire d'un coup
 world_cup_years = [2022]
 
 # Boucle sur chaque année pour récupérer les joueurs
