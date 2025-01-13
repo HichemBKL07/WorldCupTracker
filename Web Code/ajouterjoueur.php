@@ -14,9 +14,8 @@
         ':poste' => $poste,
         ':id_nation' => $id_nation
     ]);
-    $ligne = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $nb_ligne = count($ligne);
-    if (nb_ligne>0)
+    $nb_ligne = $stmt->fetchColumn();
+    if ($nb_ligne>0)
     {
         echo "Un joueur similaire existe déjà dans la base de données. Votre ajout n'a pas eu lieu.";
 
@@ -25,7 +24,7 @@
     {
         $sql = "INSERT INTO joueur(id_joueur, nom, prenom, poste, id_nation) 
         VALUES (NULL, '$nom', '$prenom', '$poste', '$id_nation')";
-        $resultat=$base->execute($sql);
+        $resultat=$base->exec($sql);
         echo "Joueur ajouté avec succès !";
     }
     
