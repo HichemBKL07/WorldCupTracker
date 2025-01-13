@@ -12,6 +12,6 @@
     }
     else
     {
-        echo "<br> Cet ID de stade est inexistant."
+        echo "<br> Cet ID de stade est inexistant.";
     }
 ?>
