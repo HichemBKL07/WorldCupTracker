@@ -3,42 +3,46 @@ try {
     $base = new PDO('mysql:host=fdb1030.awardspace.net;dbname=4544603_user', '4544603_user', 'BD0AA2323');
     echo "Connexion réussie à la base de données. <br>";
 
-    if (isset($_POST['id_competition']) && !isset($_POST['update'])) {
-        $id_competition = $_POST['id_competition'];
-        $sql = 'SELECT * FROM competition WHERE id_competition = :id';
+    if (isset($_POST['id_faute']) && !isset($_POST['update'])) {
+        $id_faute = $_POST['id_faute'];
+        $sql = 'SELECT * FROM faute WHERE id_faute = :id';
         $stmt = $base->prepare($sql);
-        $stmt->execute(['id' => $id_competition]);
+        $stmt->execute(['id' => $id_faute]);
 
-        if ($competition = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<h3>Modifier les informations de la compétition</h3>";
+        if ($faute = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<h3>Modifier les informations de la faute</h3>";
             echo "<form action='' method='post'>";
-            echo "Année : <input type='number' name='annee' value='" . ($competition['annee']) . "' required><br>";
-            echo "Pays organisateur : <input type='text' name='pays_organisateur' value='" . ($competition['pays_organisateur']) . "' required><br>";
-            echo "ID du pays vainqueur : <input type = 'text' name = 'id_vainqueur' value = '".$competition['id_vainqueur']."'required><br>";
-            echo "<input type='hidden' name='id_competition' value='" . $competition['id_competition'] . "'>";
+            echo "ID Match : <input type='number' name='id_match' value='" . htmlspecialchars($faute['id_match']) . "' required><br>";
+            echo "ID Joueur : <input type='number' name='id_joueur' value='" . htmlspecialchars($faute['id_joueur']) . "' required><br>";
+            echo "Minute : <input type='number' name='minute' value='" . htmlspecialchars($faute['minute']) . "' required><br>";
+            echo "Type de faute : <input type='text' name='type_faute' value='" . htmlspecialchars($faute['type_faute']) . "' required><br>";
+            echo "<input type='hidden' name='id_faute' value='" . $faute['id_faute'] . "'>";
             echo "<input type='hidden' name='update' value='1'>";
             echo "<input type='submit' value='Mettre à jour'>";
             echo "</form>";
         } else {
-            echo "<h3>Aucune compétition avec cet ID</h3>";
+            echo "<h3>Aucune faute avec cet ID</h3>";
         }
     }
 
-    if (isset($_POST['id_competition']) && isset($_POST['update'])) {
-        $id_competition = $_POST['id_competition'];
-        $annee = $_POST['annee'] ?? '';
-        $pays_organisateur = $_POST['pays_organisateur'] ?? '';
-		$id_vainqueur = $_POST['id_vainqueur'];
-        $sql = 'UPDATE competition SET annee = :annee, pays_organisateur = :pays_organisateur, id_vainqueur = :id_vainqueur WHERE id_competition = :id';
+    if (isset($_POST['id_faute']) && isset($_POST['update'])) {
+        $id_faute = $_POST['id_faute'];
+        $id_match = $_POST['id_match'] ?? '';
+        $id_joueur = $_POST['id_joueur'] ?? '';
+        $minute = $_POST['minute'] ?? '';
+        $type_faute = $_POST['type_faute'] ?? '';
+
+        $sql = 'UPDATE faute SET id_match = :id_match, id_joueur = :id_joueur, `minute` = :minute, type_faute = :type_faute WHERE id_faute = :id';
         $stmt = $base->prepare($sql);
         $stmt->execute([
-            'id' => $id_competition,
-            'annee' => $annee,
-            'pays_organisateur' => $pays_organisateur,
-            'id_vainqueur' => $id_vainqueur,
+            'id' => $id_faute,
+            'id_match' => $id_match,
+            'id_joueur' => $id_joueur,
+            'minute' => $minute,
+            'type_faute' => $type_faute,
         ]);
 
-        echo "<h3>Les informations de la compétition ont été mises à jour avec succès !</h3>";
+        echo "<h3>Les informations de la faute ont été mises à jour avec succès !</h3>";
     }
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
