@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Clé API ScraperAPI
-SCRAPER_API_KEY = '7173573f96bd5c4880e45c23102b2ac4'
+SCRAPER_API_KEY = #insérer ici la clé api de ScraperAPI
 
 # Création de la table 'Joueur' si elle n'existe pas déjà
 cursor.execute('''
