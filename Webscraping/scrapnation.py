@@ -14,7 +14,7 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-# URL de la page FBref pour la Coupe du Monde 1930
+# URL de la page FBref pour la Coupe du Monde 2014 pour exemple
 url = 'https://fbref.com/en/comps/1/2014/Stats-2014-World-Cup'
 response = requests.get(url)
 soup = BeautifulSoup(response.content, 'html.parser')
