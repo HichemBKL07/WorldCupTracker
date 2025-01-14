@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Clé API ScraperAPI
-SCRAPER_API_KEY = '8f94dc6e821798a2bbde762199cbdf28'
+SCRAPER_API_KEY = #insérer ici la clé api de ScraperAPI
 
 # Fonction pour obtenir l'id_nation à partir du nom de la nation
 def get_nation_id(nation_name):
