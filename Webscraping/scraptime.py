@@ -15,7 +15,7 @@ conn = mysql.connector.connect(
 )
 
 # Clé API ScraperAPI
-SCRAPER_API_KEY = '438f06b07036279e24a403ec7790d0de'
+SCRAPER_API_KEY =#insérer ici la clé api de ScraperAPI
 
 def fetch_url_with_scraperapi(url, retries=3, delay=5, timeout=10):
     proxy_url = f"http://api.scraperapi.com/?api_key={SCRAPER_API_KEY}&url={url}"
